@@ -3,6 +3,8 @@ package com.pachesoft.androidville;
 import android.app.Application;
 import android.os.StrictMode;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,18 +23,18 @@ public class MainApp extends Application {
 
         AndroidvilleAPIService service = retrofit.create(AndroidvilleAPIService.class);
 
-        Call<AVCity> callAsync = service.getAVCity();
+        Call<ArrayList<AVHouse>> callAsync = service.getAVHouses();
 
-        callAsync.enqueue(new Callback<AVCity>() {
+        callAsync.enqueue(new Callback<ArrayList<AVHouse>>() {
             @Override
-            public void onResponse(Call<AVCity> call, Response<AVCity> response) {
-                AVCity city = response.body();
+            public void onResponse(Call<ArrayList<AVHouse>> call, Response<ArrayList<AVHouse>> response) {
+                ArrayList<AVHouse> houses = response.body();
                 System.out.println("===================== GOT A RESPONSE!!!! 1");
-                System.out.println(city.name);
+                System.out.println(houses.get(0).address.y);
             }
 
             @Override
-            public void onFailure(Call<AVCity> call, Throwable throwable) {
+            public void onFailure(Call<ArrayList<AVHouse>> call, Throwable throwable) {
                 System.out.println(throwable);
             }
         });

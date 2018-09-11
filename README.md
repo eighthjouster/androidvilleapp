@@ -10,10 +10,6 @@ Pending work notes:
 ===================
 
 Next up:
- +- Make a call to the API.
-   +- Got the city.  Now:
-     +- Get houses.
- 
  - You should put the server somewhere (linode?)
    - Then update the urls in the app.
  
