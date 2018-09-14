@@ -17,7 +17,8 @@ public class MainApp extends Application {
         super.onCreate();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:3010")
+                //.baseUrl("http://10.0.2.2:3010") // Emulator's host machine (localhost parent.)
+                .baseUrl("http://androidville.rppalencia.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

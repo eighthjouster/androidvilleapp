@@ -10,9 +10,6 @@ Pending work notes:
 ===================
 
 Next up:
- - You should put the server somewhere (linode?)
-   - Then update the urls in the app.
- 
  - Create the custom view and place arbitrary houses in it.
  
  - Then, get the house information from the API.
@@ -35,3 +32,7 @@ Next up:
  
  - What else?
    - Testing?
+
+ - Once the project is done and showcased:
+   - Shutdown the linode server:
+     - /home/pach****/conf/web
