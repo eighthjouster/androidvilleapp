@@ -9,6 +9,8 @@ Good luck to us all.
 Pending work notes:
 ===================
 
+Started drawing.  See if you can put it in a scrollable view.
+
 Next up:
  - Create the custom view and place arbitrary houses in it.
  
