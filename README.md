@@ -9,7 +9,18 @@ Good luck to us all.
 Pending work notes:
 ===================
 
-Started drawing.  See if you can put it in a scrollable view.
+Use a ConstraintLayout instead.
+Maybe:
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="25dp">
+    
+</android.support.constraint.ConstraintLayout>
 
 Next up:
  - Create the custom view and place arbitrary houses in it.

@@ -45,10 +45,22 @@ public class VilleMap extends View {
         requestLayout();
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(2400,3600);
+    }
+
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawColor(getResources().getColor(R.color.colorAccent));
 
         canvas.drawText(mVilleName, 100, 100, mTextPaint);
+        canvas.drawText(mVilleName, 120, 200, mTextPaint);
+        canvas.drawText(mVilleName, 140, 300, mTextPaint);
+        canvas.drawText(mVilleName, 160, 400, mTextPaint);
+        canvas.drawText(mVilleName, 140, 500, mTextPaint);
+        canvas.drawText(mVilleName, 120, 600, mTextPaint);
+        canvas.drawText(mVilleName, 100, 700, mTextPaint);
     }
 }
