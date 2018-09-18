@@ -92,5 +92,6 @@ public class VilleMap extends View {
 
     public void setHouses(List<AVHouse> houses) {
         this.houses = houses;
+        this.invalidate();
     }
 }
