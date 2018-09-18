@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidVille</string>
+    <string name="av_btn_house_add">Add House</string>
 </resources>

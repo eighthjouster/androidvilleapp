@@ -10,10 +10,14 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
 public class VilleMap extends View {
+    private MainApp mainApp;
+    private TextView txtHouseName;
+
     private String mVilleName;
 
     private Paint mTextPaint;
@@ -29,8 +33,9 @@ public class VilleMap extends View {
     public VilleMap(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray myAttrs = context.getTheme().obtainStyledAttributes(attrs, R.styleable.VilleMap, 0, 0);
         init();
+
+        TypedArray myAttrs = context.getTheme().obtainStyledAttributes(attrs, R.styleable.VilleMap, 0, 0);
 
         try {
             mVilleName = myAttrs.getString(R.styleable.VilleMap_villeName);
@@ -52,6 +57,11 @@ public class VilleMap extends View {
         houseSelectedBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.house_selected_icon);
 
         houseBitmapSize = new RectF(0, 0, 100, 100);
+    }
+
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+        this.txtHouseName = mainApp.mainActivity.findViewById(R.id.txt_house_name);
     }
 
     public String getVilleName() {
@@ -77,6 +87,7 @@ public class VilleMap extends View {
             int x = (int)(event.getX() * 0.01f);
             int y = (int)(event.getY() * 0.01f);
             boolean doInvalidate = false;
+            txtHouseName.setText("");
 
             for (int i=0; i<houses.size(); i++) {
                 AVHouse house = houses.get(i);
@@ -86,7 +97,9 @@ public class VilleMap extends View {
                 }
 
                 if ((house.address.x == x) && (house.address.y == y)) {
-                    house.selected = !house.selected;
+                    house.selected = true;
+                    txtHouseName.setText(house.name);
+
                     doInvalidate = true;
                 }
             }
