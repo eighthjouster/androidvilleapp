@@ -2,8 +2,11 @@ package com.pachesoft.androidville;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -11,7 +14,10 @@ public class VilleMap extends View {
     private String mVilleName;
 
     private Paint mTextPaint;
-    private float mTextHeight;
+    private Paint mGridPaint;
+
+    private Bitmap houseBitmap;
+    private RectF houseBitmapSize;
 
     public VilleMap(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -24,15 +30,19 @@ public class VilleMap extends View {
         } finally {
             myAttrs.recycle();
         }
-        System.out.println("==== THE VILLE NAME IS:");//__RP
-        System.out.println(mVilleName);//__RP
-
     }
 
     private void init() {
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextSize(100.0f);
-        mTextPaint.setColor(getResources().getColor(R.color.colorPrimary));
+        mTextPaint.setColor(getResources().getColor(R.color.white));
+
+        mGridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mGridPaint.setColor(getResources().getColor(R.color.yellow));
+        mGridPaint.setStrokeWidth(2);
+
+        houseBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.house_icon);
+        houseBitmapSize = new RectF(0, 0, 100, 100);
     }
 
     public String getVilleName() {
@@ -53,14 +63,20 @@ public class VilleMap extends View {
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawColor(getResources().getColor(R.color.colorAccent));
-
-        canvas.drawText(mVilleName, 100, 100, mTextPaint);
-        canvas.drawText(mVilleName, 120, 200, mTextPaint);
-        canvas.drawText(mVilleName, 140, 300, mTextPaint);
-        canvas.drawText(mVilleName, 160, 400, mTextPaint);
-        canvas.drawText(mVilleName, 140, 500, mTextPaint);
-        canvas.drawText(mVilleName, 120, 600, mTextPaint);
+        canvas.drawColor(getResources().getColor(R.color.darkGreen));
         canvas.drawText(mVilleName, 100, 700, mTextPaint);
+
+        for (int i=0; i<3600;i+=100) {
+            canvas.drawLine(0, i, 2400, i, mGridPaint);
+        }
+
+        for (int i=0; i<2400;i+=100) {
+            canvas.drawLine(i, 0, i, 3600, mGridPaint);
+        }
+
+        canvas.save();
+        canvas.translate(100,100);
+        canvas.drawBitmap(houseBitmap, null, houseBitmapSize, null);
+        canvas.restore();
     }
 }
