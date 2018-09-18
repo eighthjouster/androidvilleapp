@@ -1,5 +1,6 @@
 package com.pachesoft.androidville;
 
+import android.app.Activity;
 import android.app.Application;
 import android.os.StrictMode;
 
@@ -12,6 +13,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainApp extends Application {
+    MainActivity mainActivity;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -30,8 +33,7 @@ public class MainApp extends Application {
             @Override
             public void onResponse(Call<ArrayList<AVHouse>> call, Response<ArrayList<AVHouse>> response) {
                 ArrayList<AVHouse> houses = response.body();
-                System.out.println("===================== GOT A RESPONSE!!!! 1");
-                System.out.println(houses.get(0).address.y);
+                mainActivity.getVilleMap().setHouses(houses);
             }
 
             @Override
@@ -39,5 +41,9 @@ public class MainApp extends Application {
                 System.out.println(throwable);
             }
         });
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 }

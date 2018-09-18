@@ -16,6 +16,7 @@
             android:layout_height="wrap_content">
 
             <com.pachesoft.androidville.VilleMap
+                android:id="@+id/mainVilleMap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:villeName="Village Name here!" />

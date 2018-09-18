@@ -16,15 +16,18 @@ public class MainActivity extends AppCompatActivity {
     private ScrollView vScroll;
     private HorizontalScrollView hScroll;
 
+    private VilleMap villeMap;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainApp = (MainApp) getApplication();
         setContentView(R.layout.activity_main);
 
-        vScroll = (ScrollView) findViewById(R.id.vScroll);
-        hScroll = (HorizontalScrollView) findViewById(R.id.hScroll);
-
+        vScroll = findViewById(R.id.vScroll);
+        hScroll = findViewById(R.id.hScroll);
+        villeMap = findViewById(R.id.mainVilleMap);
+        mainApp.setMainActivity(this);
     }
 
     @Override
@@ -56,4 +59,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public VilleMap getVilleMap() {
+        return villeMap;
+    }
 }

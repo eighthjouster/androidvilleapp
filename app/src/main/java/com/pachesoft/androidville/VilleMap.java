@@ -10,6 +10,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.List;
+
 public class VilleMap extends View {
     private String mVilleName;
 
@@ -18,6 +20,8 @@ public class VilleMap extends View {
 
     private Bitmap houseBitmap;
     private RectF houseBitmapSize;
+
+    private List<AVHouse> houses = null;
 
     public VilleMap(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -74,9 +78,19 @@ public class VilleMap extends View {
             canvas.drawLine(i, 0, i, 3600, mGridPaint);
         }
 
-        canvas.save();
-        canvas.translate(100,100);
-        canvas.drawBitmap(houseBitmap, null, houseBitmapSize, null);
-        canvas.restore();
+        if (houses != null) {
+            for (int i=0; i<houses.size(); i++) {
+                AVHouse house = houses.get(i);
+
+                canvas.save();
+                canvas.translate(house.address.x * 100,house.address.y * 100);
+                canvas.drawBitmap(houseBitmap, null, houseBitmapSize, null);
+                canvas.restore();
+            }
+        }
+    }
+
+    public void setHouses(List<AVHouse> houses) {
+        this.houses = houses;
     }
 }
