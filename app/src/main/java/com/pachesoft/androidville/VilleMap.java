@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class VilleMap extends View {
     private Paint mGridPaint;
 
     private Bitmap houseBitmap;
+    private Bitmap houseSelectedBitmap;
+
     private RectF houseBitmapSize;
 
     private List<AVHouse> houses = null;
@@ -46,6 +49,8 @@ public class VilleMap extends View {
         mGridPaint.setStrokeWidth(2);
 
         houseBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.house_icon);
+        houseSelectedBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.house_selected_icon);
+
         houseBitmapSize = new RectF(0, 0, 100, 100);
     }
 
@@ -63,6 +68,35 @@ public class VilleMap extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(2400,3600);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            int x = (int)(event.getX() * 0.01f);
+            int y = (int)(event.getY() * 0.01f);
+            boolean doInvalidate = false;
+
+            for (int i=0; i<houses.size(); i++) {
+                AVHouse house = houses.get(i);
+                if (house.selected) {
+                    house.selected = false;
+                    doInvalidate = true;
+                }
+
+                if ((house.address.x == x) && (house.address.y == y)) {
+                    house.selected = !house.selected;
+                    doInvalidate = true;
+                }
+            }
+
+            if (doInvalidate) {
+                invalidate();
+            }
+        }
+
+        return super.onTouchEvent(event);
     }
 
     protected void onDraw(Canvas canvas) {
@@ -85,6 +119,11 @@ public class VilleMap extends View {
                 canvas.save();
                 canvas.translate(house.address.x * 100,house.address.y * 100);
                 canvas.drawBitmap(houseBitmap, null, houseBitmapSize, null);
+
+                if (house.selected) {
+                    canvas.drawBitmap(houseSelectedBitmap, null, houseBitmapSize, null);
+                }
+
                 canvas.restore();
             }
         }
