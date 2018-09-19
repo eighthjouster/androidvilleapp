@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -86,12 +85,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAddHouseBtnClick(View v) {
-        AVHouse newHouse = new AVHouse(5, "JUST TESTING", new AVAddress(7, 7));
+        AVHouse newHouse = new AVHouse(5, houseDialogTextField.getText().toString(), new AVAddress(7, 7));
 
         mainApp.serverComm.addHouse(newHouse, new Callback<AVHouse>() {
             @Override
             public void onResponse(Call<AVHouse> call, Response<AVHouse> response) {
                 slideDownAnimation.start();
+                houseDialogTextField.setText("");
                 mainApp.getAllHouses();
             }
 
