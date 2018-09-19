@@ -28,6 +28,8 @@ public class VilleMap extends View {
 
     private RectF houseBitmapSize;
 
+    private boolean scrollingHappening = false;
+
     private List<AVHouse> houses = null;
 
     public VilleMap(Context context, AttributeSet attrs) {
@@ -82,31 +84,48 @@ public class VilleMap extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        int eventAction = event.getAction();
+        System.out.println("ACTION!");//__RP
+        System.out.println(eventAction);//__RP
 
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            int x = (int)(event.getX() * 0.01f);
-            int y = (int)(event.getY() * 0.01f);
-            boolean doInvalidate = false;
-            txtHouseName.setText("");
+        switch (eventAction) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_SCROLL:
+                System.out.println("SCROLL!");//__RP
+                scrollingHappening = true;
+                break;
+            case MotionEvent.ACTION_UP:
+                System.out.println("UP!");//__RP
+                if (!scrollingHappening) {
+                    int x = (int) (event.getX() * 0.01f);
+                    int y = (int) (event.getY() * 0.01f);
+                    boolean doInvalidate = false;
+                    txtHouseName.setText("");
 
-            for (int i=0; i<houses.size(); i++) {
-                AVHouse house = houses.get(i);
-                if (house.selected) {
-                    house.selected = false;
-                    doInvalidate = true;
+                    for (int i = 0; i < houses.size(); i++) {
+                        AVHouse house = houses.get(i);
+                        if (house.selected) {
+                            house.selected = false;
+                            doInvalidate = true;
+                        }
+
+                        if ((house.address.x == x) && (house.address.y == y)) {
+                            house.selected = true;
+                            txtHouseName.setText(house.name);
+
+                            doInvalidate = true;
+                        }
+                    }
+
+                    if (doInvalidate) {
+                        invalidate();
+                    }
                 }
 
-                if ((house.address.x == x) && (house.address.y == y)) {
-                    house.selected = true;
-                    txtHouseName.setText(house.name);
-
-                    doInvalidate = true;
-                }
-            }
-
-            if (doInvalidate) {
-                invalidate();
-            }
+                scrollingHappening = false;
+                break;
+            default:
         }
 
         return super.onTouchEvent(event);

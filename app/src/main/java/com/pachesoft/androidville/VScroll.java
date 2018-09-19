@@ -21,6 +21,7 @@ public class VScroll extends ScrollView {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+        System.out.println("VSCROLL TOUCH EVENT!");//__RP
         return false;
     }
 }
