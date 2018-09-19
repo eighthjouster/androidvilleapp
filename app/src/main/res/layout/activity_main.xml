@@ -7,38 +7,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.pachesoft.androidville.VillageMapLinearLayout
-        android:id="@+id/villageMapLayout"
+    <com.pachesoft.androidville.VScroll
+        android:id="@+id/vScroll"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="80dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="80dp">
 
-        <com.pachesoft.androidville.VScroll
-            android:id="@+id/vScroll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+        <com.pachesoft.androidville.HScroll
+            android:id="@+id/hScroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <com.pachesoft.androidville.HScroll
-                android:id="@+id/hScroll"
+            <com.pachesoft.androidville.VilleMap
+                android:id="@+id/mainVilleMap"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.pachesoft.androidville.VilleMap
-                    android:id="@+id/mainVilleMap"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:villeName="Village Name here!" />
-            </com.pachesoft.androidville.HScroll>
-        </com.pachesoft.androidville.VScroll>
-
-    </com.pachesoft.androidville.VillageMapLinearLayout>
+                android:layout_height="wrap_content"
+                app:villeName="Village Name here!" />
+        </com.pachesoft.androidville.HScroll>
+    </com.pachesoft.androidville.VScroll>
 
     <TextView
         android:id="@+id/txt_house_name"
@@ -47,7 +37,7 @@
         android:text="@string/av_btn_house_add"
         app:layout_constraintEnd_toEndOf="@+id/mainLayout"
         app:layout_constraintStart_toStartOf="@+id/mainLayout"
-        app:layout_constraintTop_toBottomOf="@+id/villageMapLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/vScroll" />
 
     <Button
         android:id="@+id/btn_add_house"

@@ -85,36 +85,34 @@ public class VilleMap extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int eventAction = event.getAction();
-        System.out.println("ACTION!");//__RP
-        System.out.println(eventAction);//__RP
-
         switch (eventAction) {
             case MotionEvent.ACTION_DOWN:
+                scrollingHappening = false;
                 break;
-            case MotionEvent.ACTION_SCROLL:
-                System.out.println("SCROLL!");//__RP
+            case MotionEvent.ACTION_MOVE:
                 scrollingHappening = true;
                 break;
             case MotionEvent.ACTION_UP:
-                System.out.println("UP!");//__RP
                 if (!scrollingHappening) {
                     int x = (int) (event.getX() * 0.01f);
                     int y = (int) (event.getY() * 0.01f);
                     boolean doInvalidate = false;
                     txtHouseName.setText("");
 
-                    for (int i = 0; i < houses.size(); i++) {
-                        AVHouse house = houses.get(i);
-                        if (house.selected) {
-                            house.selected = false;
-                            doInvalidate = true;
-                        }
+                    if (houses != null) {
+                        for (int i = 0; i < houses.size(); i++) {
+                            AVHouse house = houses.get(i);
+                            if (house.selected) {
+                                house.selected = false;
+                                doInvalidate = true;
+                            }
 
-                        if ((house.address.x == x) && (house.address.y == y)) {
-                            house.selected = true;
-                            txtHouseName.setText(house.name);
+                            if ((house.address.x == x) && (house.address.y == y)) {
+                                house.selected = true;
+                                txtHouseName.setText(house.name);
 
-                            doInvalidate = true;
+                                doInvalidate = true;
+                            }
                         }
                     }
 
@@ -128,7 +126,7 @@ public class VilleMap extends View {
             default:
         }
 
-        return super.onTouchEvent(event);
+        return true;
     }
 
     protected void onDraw(Canvas canvas) {
