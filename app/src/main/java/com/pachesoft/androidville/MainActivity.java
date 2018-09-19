@@ -1,18 +1,24 @@
 package com.pachesoft.androidville;
 
+import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private MainApp mainApp;
+    private EditText houseDialogTextField;
 
     public VScroll vScroll;
-    public LinearLayout dialogLayout;
+    public ConstraintLayout dialogLayout;
 
     private VilleMap villeMap;
 
@@ -27,17 +33,38 @@ public class MainActivity extends AppCompatActivity {
         vScroll = findViewById(R.id.vScroll);
         villeMap = findViewById(R.id.mainVilleMap);
         dialogLayout = findViewById(R.id.ll_house_dialog);
+        houseDialogTextField = findViewById(R.id.txt_input_house_name);
 
         mainApp = (MainApp) getApplication();
         mainApp.setMainActivity(this);
 
         slideUpAnimation = (AnimatorSet) AnimatorInflater.loadAnimator(this,
                 R.animator.slide_up);
+        slideUpAnimation.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+            }
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                houseDialogTextField.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);            }
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
         slideUpAnimation.setTarget(dialogLayout);
 
         slideDownAnimation = (AnimatorSet) AnimatorInflater.loadAnimator(this,
                 R.animator.slide_down);
         slideDownAnimation.setTarget(dialogLayout);
+
+        houseDialogTextField.setFocusableInTouchMode(true);
     }
 
     public VilleMap getVilleMap() {
@@ -48,7 +75,9 @@ public class MainActivity extends AppCompatActivity {
         slideUpAnimation.start();
     }
 
-    public void otherBtnClick(View v) {
+    public void onDismissHouseDialogBtnClick(View v) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         slideDownAnimation.start();
     }
 }

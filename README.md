@@ -11,6 +11,7 @@ Pending work notes:
 
 Next up:
  - Add a house.
+   - After adding house, clear house name field.
  
  - Edit a house.
  
@@ -22,3 +23,8 @@ Next up:
  - Once the project is done and showcased:
    - Shutdown the linode server:
      - /home/p*****/conf/web
+
+Issues:
+=======
+
+- Bring up the soft keyboard.  Hit enter with a _hardware_ keyboard.  Try to dismiss the dialog.  The app crashes.
