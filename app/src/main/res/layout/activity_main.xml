@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,6 +25,7 @@
                 android:id="@+id/mainVilleMap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="addHouseBtnClick"
                 app:villeName="Village Name here!" />
         </com.pachesoft.androidville.HScroll>
     </com.pachesoft.androidville.VScroll>
@@ -44,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/av_btn_house_add"
+        android:onClick="addHouseBtnClick"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/txt_house_name" />
 
@@ -59,7 +60,8 @@
         android:id="@+id/ll_house_dialog"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="1000dp"
+        android:layout_marginTop="0dp"
+        android:visibility="invisible"
         android:orientation="vertical">
         <Button
             android:id="@+id/action_button"
