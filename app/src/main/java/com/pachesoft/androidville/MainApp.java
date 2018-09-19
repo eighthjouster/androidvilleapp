@@ -16,6 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainApp extends Application {
     public MainActivity mainActivity;
     public ServerCommService serverComm;
+    private int houseToHighlight = -1;
 
     @Override
     public void onCreate() {
@@ -26,12 +27,20 @@ public class MainApp extends Application {
         getAllHouses();
     }
 
+    public void getAllHouses(int houseToHighlight) {
+        this.houseToHighlight = houseToHighlight;
+        getAllHouses();
+    }
     public void getAllHouses() {
         serverComm.getAllHouses(new Callback<ArrayList<AVHouse>>() {
             @Override
             public void onResponse(Call<ArrayList<AVHouse>> call, Response<ArrayList<AVHouse>> response) {
                 ArrayList<AVHouse> houses = response.body();
                 mainActivity.getVilleMap().setHouses(houses);
+                if (houseToHighlight != -1) {
+                    mainActivity.getVilleMap().highlightHouse(houseToHighlight);
+                    houseToHighlight = -1;
+                }
             }
 
             @Override

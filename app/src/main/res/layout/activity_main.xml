@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name"
+            android:text=""
             app:layout_constraintTop_toTopOf="@+id/txt_form_name_lbl"
             app:layout_constraintStart_toEndOf="@+id/txt_form_name_lbl"
             tools:layout_editor_absoluteX="108dp"

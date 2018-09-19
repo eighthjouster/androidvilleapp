@@ -79,20 +79,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onDismissHouseDialogBtnClick(View v) {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        dismissSoftKeyboard();
         slideDownAnimation.start();
     }
 
     public void onAddHouseBtnClick(View v) {
-        AVHouse newHouse = new AVHouse(5, houseDialogTextField.getText().toString(), new AVAddress(7, 7));
+        final int houseId = 5;
+        AVHouse newHouse = new AVHouse(houseId, houseDialogTextField.getText().toString(), new AVAddress(7, 7));
 
         mainApp.serverComm.addHouse(newHouse, new Callback<AVHouse>() {
             @Override
             public void onResponse(Call<AVHouse> call, Response<AVHouse> response) {
+                dismissSoftKeyboard();
                 slideDownAnimation.start();
                 houseDialogTextField.setText("");
-                mainApp.getAllHouses();
+                mainApp.getAllHouses(houseId);
             }
 
             @Override
@@ -101,5 +102,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void dismissSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 }

@@ -77,6 +77,26 @@ public class VilleMap extends View {
         requestLayout();
     }
 
+    public void highlightHouse(int houseId) {
+        boolean doInvalidate = false;
+        for (int i = 0; i < houses.size(); i++) {
+            AVHouse house = houses.get(i);
+            if (house.selected) {
+                house.selected = false;
+                doInvalidate = true;
+            }
+
+            if (house.id == houseId) {
+                house.selected = true;
+                txtHouseName.setText(house.name);
+                doInvalidate = true;
+            }
+        }
+        if (doInvalidate) {
+            invalidate();
+        }
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
