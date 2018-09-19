@@ -1,15 +1,12 @@
 package com.pachesoft.androidville;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 public class MainActivity extends AppCompatActivity {
     private MainApp mainApp;
@@ -18,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
     public LinearLayout dialogLayout;
 
     private VilleMap villeMap;
+
+    private AnimatorSet slideUpAnimation;
+    private AnimatorSet slideDownAnimation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,14 @@ public class MainActivity extends AppCompatActivity {
 
         mainApp = (MainApp) getApplication();
         mainApp.setMainActivity(this);
+
+        slideUpAnimation = (AnimatorSet) AnimatorInflater.loadAnimator(this,
+                R.animator.slide_up);
+        slideUpAnimation.setTarget(dialogLayout);
+
+        slideDownAnimation = (AnimatorSet) AnimatorInflater.loadAnimator(this,
+                R.animator.slide_down);
+        slideDownAnimation.setTarget(dialogLayout);
     }
 
     public VilleMap getVilleMap() {
@@ -37,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addHouseBtnClick(View v) {
-        dialogLayout.setVisibility(View.VISIBLE);
+        slideUpAnimation.start();
+    }
+
+    public void otherBtnClick(View v) {
+        slideDownAnimation.start();
     }
 }
