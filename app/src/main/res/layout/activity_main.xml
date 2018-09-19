@@ -55,5 +55,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_house_name" />
 
-
+    <LinearLayout
+        android:id="@+id/ll_house_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1000dp"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/action_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_house_name" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

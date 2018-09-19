@@ -46,5 +46,6 @@ public class MainApp extends Application {
     public void setMainActivity(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
         this.mainActivity.getVilleMap().setMainApp(this);
+        this.mainActivity.vScroll.setMainActivity(mainActivity);
     }
 }

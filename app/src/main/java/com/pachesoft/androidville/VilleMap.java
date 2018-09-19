@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,9 +29,9 @@ public class VilleMap extends View {
 
     private RectF houseBitmapSize;
 
-    private boolean scrollingHappening = false;
-
     private List<AVHouse> houses = null;
+
+    private boolean isScrolling = false;
 
     public VilleMap(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -87,46 +88,49 @@ public class VilleMap extends View {
         int eventAction = event.getAction();
         switch (eventAction) {
             case MotionEvent.ACTION_DOWN:
-                scrollingHappening = false;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                scrollingHappening = true;
-                break;
-            case MotionEvent.ACTION_UP:
-                if (!scrollingHappening) {
-                    int x = (int) (event.getX() * 0.01f);
-                    int y = (int) (event.getY() * 0.01f);
-                    boolean doInvalidate = false;
-                    txtHouseName.setText("");
+                final int x = (int) (event.getX() * 0.01f);
+                final int y = (int) (event.getY() * 0.01f);
 
-                    if (houses != null) {
-                        for (int i = 0; i < houses.size(); i++) {
-                            AVHouse house = houses.get(i);
-                            if (house.selected) {
-                                house.selected = false;
-                                doInvalidate = true;
+                new CountDownTimer(250, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    public void onFinish() {
+                        if (isScrolling) {
+                            return;
+                        }
+                        boolean doInvalidate = false;
+                        txtHouseName.setText("");
+
+                        if (houses != null) {
+                            for (int i = 0; i < houses.size(); i++) {
+                                AVHouse house = houses.get(i);
+                                if (house.selected) {
+                                    house.selected = false;
+                                    doInvalidate = true;
+                                }
+
+                                if ((house.address.x == x) && (house.address.y == y)) {
+                                    house.selected = true;
+                                    txtHouseName.setText(house.name);
+
+                                    doInvalidate = true;
+                                }
                             }
 
-                            if ((house.address.x == x) && (house.address.y == y)) {
-                                house.selected = true;
-                                txtHouseName.setText(house.name);
-
-                                doInvalidate = true;
+                            if (doInvalidate) {
+                                invalidate();
                             }
                         }
                     }
+                }.start();
 
-                    if (doInvalidate) {
-                        invalidate();
-                    }
-                }
-
-                scrollingHappening = false;
                 break;
             default:
         }
 
-        return true;
+        return false;
     }
 
     protected void onDraw(Canvas canvas) {
@@ -162,5 +166,9 @@ public class VilleMap extends View {
     public void setHouses(List<AVHouse> houses) {
         this.houses = houses;
         this.invalidate();
+    }
+
+    public void setIsScrolling(boolean isScrolling) {
+        this.isScrolling = isScrolling;
     }
 }
