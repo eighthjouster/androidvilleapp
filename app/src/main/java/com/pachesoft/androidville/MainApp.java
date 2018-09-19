@@ -2,6 +2,7 @@ package com.pachesoft.androidville;
 
 import android.app.Activity;
 import android.app.Application;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.StrictMode;
 
 import java.util.ArrayList;
@@ -13,23 +14,20 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainApp extends Application {
-    MainActivity mainActivity;
+    public MainActivity mainActivity;
+    public ServerCommService serverComm;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                //.baseUrl("http://10.0.2.2:3010") // Emulator's host machine (localhost parent.)
-                .baseUrl("http://androidville.rppalencia.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        serverComm = new ServerCommService();
 
-        AndroidvilleAPIService service = retrofit.create(AndroidvilleAPIService.class);
+        getAllHouses();
+    }
 
-        Call<ArrayList<AVHouse>> callAsync = service.getAVHouses();
-
-        callAsync.enqueue(new Callback<ArrayList<AVHouse>>() {
+    public void getAllHouses() {
+        serverComm.getAllHouses(new Callback<ArrayList<AVHouse>>() {
             @Override
             public void onResponse(Call<ArrayList<AVHouse>> call, Response<ArrayList<AVHouse>> response) {
                 ArrayList<AVHouse> houses = response.body();

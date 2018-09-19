@@ -13,6 +13,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
     private MainApp mainApp;
     private EditText houseDialogTextField;
@@ -79,5 +83,23 @@ public class MainActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         slideDownAnimation.start();
+    }
+
+    public void onAddHouseBtnClick(View v) {
+        AVHouse newHouse = new AVHouse(5, "JUST TESTING", new AVAddress(7, 7));
+
+        mainApp.serverComm.addHouse(newHouse, new Callback<AVHouse>() {
+            @Override
+            public void onResponse(Call<AVHouse> call, Response<AVHouse> response) {
+                slideDownAnimation.start();
+                mainApp.getAllHouses();
+            }
+
+            @Override
+            public void onFailure(Call<AVHouse> call, Throwable t) {
+
+            }
+        });
+
     }
 }
