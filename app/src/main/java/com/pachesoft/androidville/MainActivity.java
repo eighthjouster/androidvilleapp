@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private AnimatorSet slideDownAnimation;
 
     private boolean houseEditMode = false;
-    private TextView selectedHouseName;
+    public TextView selectedHouseName;
 
 
     @Override
@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<AVHouse> call, Response<AVHouse> response) {
                     houseDialogTextField.setText("");
+                    selectedHouseName.setText("");
                     villeMap.selectedHouse = null;
                     villeMap.selectedSpotX = selectedSpotX;
                     villeMap.selectedSpotY = selectedSpotY;
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<AVHouse> call, Throwable t) {
-
+                    selectedHouseName.setText("** Operation failed **");
                 }
             });
         }
@@ -154,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAddEditHouseBtnClick(View v) {
-        String houseName = houseDialogTextField.getText().toString();
+        final String houseName = houseDialogTextField.getText().toString();
         if (!"".equals(houseName)) {
             if (villeMap.selectedHouse == null) {
                 final int houseId = nextHouseId++;
@@ -168,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                         slideDownAnimation.start();
                         houseDialogTextField.setText("");
                         mainApp.getAllHouses(houseId);
+                        selectedHouseName.setText(houseName);
                         villeMap.selectedSpotX = -1;
                         villeMap.selectedSpotY = -1;
                         setHouseEditMode(true);
@@ -175,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<AVHouse> call, Throwable t) {
-
+                        selectedHouseName.setText("** Operation failed **");
                     }
                 });
             }
@@ -190,11 +192,12 @@ public class MainActivity extends AppCompatActivity {
                         dismissSoftKeyboard();
                         slideDownAnimation.start();
                         houseDialogTextField.setText("");
+                        selectedHouseName.setText(houseName);
                     }
 
                     @Override
                     public void onFailure(Call<AVHouse> call, Throwable t) {
-                        selectedHouseName.setText("Fail");
+                        selectedHouseName.setText("** Operation failed **");
                     }
                 });
             }
