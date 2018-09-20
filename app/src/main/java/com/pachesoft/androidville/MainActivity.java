@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean houseEditMode = false;
     public TextView selectedHouseName;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +108,12 @@ public class MainActivity extends AppCompatActivity {
         houseDialogTextField.setFocusableInTouchMode(true);
 
         setHouseEditMode(false);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mainApp.getAllHouses();
     }
 
     public VilleMap getVilleMap() {

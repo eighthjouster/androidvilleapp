@@ -18,8 +18,6 @@ public class MainApp extends Application {
         super.onCreate();
 
         serverComm = new ServerCommService();
-
-        getAllHouses();
     }
 
     public void getAllHouses(int houseToHighlight) {
