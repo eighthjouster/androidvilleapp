@@ -30,4 +30,9 @@ public class ServerCommService
         Call<AVHouse> callAsync = service.postAVHouse(house);
         callAsync.enqueue(responseHandler);
     }
+
+    public void updateHouse(AVHouse house, Callback<AVHouse> responseHandler) {
+        Call<AVHouse> callAsync = service.putAVHouse(house.id, house);
+        callAsync.enqueue(responseHandler);
+    }
 }

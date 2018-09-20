@@ -38,6 +38,8 @@ Pending issues:
 
 - In fact, if the app crashes with the keyboard showing, the keyboard will remain.  Any way to tie the keyboard to the app, so it gets dismissed if the app crashes?  What's the behavior in other apps?
 
+- Deleting houses should confirm before proceeding.
+
 - Adding a house overwrites the old one.  There should be a confirmation dialog, or a refusal response.
 
 - The "vacant" attribute needs to be handled.

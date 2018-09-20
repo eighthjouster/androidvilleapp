@@ -30,6 +30,8 @@ public class VilleMap extends View {
 
     private RectF houseBitmapSize;
 
+    public AVHouse selectedHouse = null;
+
     private List<AVHouse> houses = null;
 
     private boolean isScrolling = false;
@@ -84,15 +86,16 @@ public class VilleMap extends View {
 
     public void highlightHouse(int houseId) {
         boolean doInvalidate = false;
+        if (selectedHouse != null) {
+            selectedHouse.selected = false;
+            selectedHouse = null;
+            doInvalidate = true;
+        }
         for (int i = 0; i < houses.size(); i++) {
             AVHouse house = houses.get(i);
-            if (house.selected) {
-                house.selected = false;
-                doInvalidate = true;
-            }
-
             if (house.id == houseId) {
-                house.selected = true;
+                selectedHouse = house;
+                selectedHouse.selected = true;
                 txtHouseName.setText(house.name);
                 doInvalidate = true;
             }
@@ -129,14 +132,16 @@ public class VilleMap extends View {
                         txtHouseName.setText("");
 
                         if (houses != null) {
+                            if (selectedHouse != null) {
+                                selectedHouse.selected = false;
+                                selectedHouse = null;
+                            }
                             for (int i = 0; i < houses.size(); i++) {
                                 AVHouse house = houses.get(i);
-                                if (house.selected) {
-                                    house.selected = false;
-                                }
-
                                 if ((house.address.x == x) && (house.address.y == y)) {
-                                    house.selected = true;
+                                    selectedHouse = house;
+                                    selectedHouse.selected = true;
+
                                     txtHouseName.setText(house.name);
 
                                     houseSelected = true;
@@ -160,6 +165,8 @@ public class VilleMap extends View {
                                 selectedSpotY = y;
                             }
                         }
+
+                        mainApp.mainActivity.setHouseEditMode(houseSelected);
 
                         invalidate();
                     }

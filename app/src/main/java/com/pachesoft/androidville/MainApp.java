@@ -1,17 +1,12 @@
 package com.pachesoft.androidville;
 
-import android.app.Activity;
 import android.app.Application;
-import android.net.wifi.p2p.WifiP2pManager;
-import android.os.StrictMode;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainApp extends Application {
     public MainActivity mainActivity;
@@ -44,6 +39,7 @@ public class MainApp extends Application {
 
                 for (int i = 0; i < houses.size(); i++) {
                     AVHouse house = houses.get(i);
+                    house.selected = false;
                     if (mainActivity.nextHouseId <= house.id) {
                         mainActivity.nextHouseId = house.id + 1;
                     }
