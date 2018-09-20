@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<AVHouse> call, Response<AVHouse> response) {
                     houseDialogTextField.setText("");
+                    villeMap.selectedHouse = null;
                     villeMap.selectedSpotX = selectedSpotX;
                     villeMap.selectedSpotY = selectedSpotY;
                     setHouseEditMode(false);
