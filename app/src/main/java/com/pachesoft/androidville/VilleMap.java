@@ -182,7 +182,7 @@ public class VilleMap extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawColor(getResources().getColor(R.color.darkGreen));
-        canvas.drawText(mVilleName, 100, 700, mTextPaint);
+        canvas.drawText(mVilleName, 0, 100, mTextPaint);
 
         for (int i=0; i<3600;i+=100) {
             canvas.drawLine(0, i, 2400, i, mGridPaint);

@@ -15,8 +15,6 @@ Next up:
  - Handle the back button.
    - Dismiss dialog if the back button is pressed.
 
- - Get rid of the village name from the map.
-
  - Once the project is done and showcased:
    - Shutdown the linode server:
      - /home/p*****/conf/web
