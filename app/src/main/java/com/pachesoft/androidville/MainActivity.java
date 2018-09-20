@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     private VilleMap villeMap;
 
+    public int nextHouseId = 1;
+
     private AnimatorSet slideUpAnimation;
     private AnimatorSet slideDownAnimation;
 
@@ -84,24 +86,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAddHouseBtnClick(View v) {
-        final int houseId = 5;
-        AVHouse newHouse = new AVHouse(houseId, houseDialogTextField.getText().toString(), new AVAddress(7, 7));
+        String houseName = houseDialogTextField.getText().toString();
+        if ((villeMap.selectedSpotX != -1) && (villeMap.selectedSpotY != -1) && !"".equals(houseName)) {
+            final int houseId = nextHouseId++;
+            AVHouse newHouse = new AVHouse(houseId, houseName, new AVAddress(villeMap.selectedSpotX, villeMap.selectedSpotY));
 
-        mainApp.serverComm.addHouse(newHouse, new Callback<AVHouse>() {
-            @Override
-            public void onResponse(Call<AVHouse> call, Response<AVHouse> response) {
-                dismissSoftKeyboard();
-                slideDownAnimation.start();
-                houseDialogTextField.setText("");
-                mainApp.getAllHouses(houseId);
-            }
+            mainApp.serverComm.addHouse(newHouse, new Callback<AVHouse>() {
+                @Override
+                public void onResponse(Call<AVHouse> call, Response<AVHouse> response) {
+                    dismissSoftKeyboard();
+                    slideDownAnimation.start();
+                    houseDialogTextField.setText("");
+                    mainApp.getAllHouses(houseId);
+                    villeMap.selectedSpotX = -1;
+                    villeMap.selectedSpotY = -1;
+                }
 
-            @Override
-            public void onFailure(Call<AVHouse> call, Throwable t) {
+                @Override
+                public void onFailure(Call<AVHouse> call, Throwable t) {
 
-            }
-        });
-
+                }
+            });
+        }
     }
 
     private void dismissSoftKeyboard() {

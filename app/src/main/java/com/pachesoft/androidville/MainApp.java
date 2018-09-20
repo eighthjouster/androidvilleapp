@@ -41,6 +41,13 @@ public class MainApp extends Application {
                     mainActivity.getVilleMap().highlightHouse(houseToHighlight);
                     houseToHighlight = -1;
                 }
+
+                for (int i = 0; i < houses.size(); i++) {
+                    AVHouse house = houses.get(i);
+                    if (mainActivity.nextHouseId <= house.id) {
+                        mainActivity.nextHouseId = house.id + 1;
+                    }
+                }
             }
 
             @Override

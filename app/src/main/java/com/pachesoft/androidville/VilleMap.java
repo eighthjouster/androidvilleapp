@@ -26,12 +26,16 @@ public class VilleMap extends View {
 
     private Bitmap houseBitmap;
     private Bitmap houseSelectedBitmap;
+    private Bitmap spotSelectedBitmap;
 
     private RectF houseBitmapSize;
 
     private List<AVHouse> houses = null;
 
     private boolean isScrolling = false;
+
+    public int selectedSpotX = -1;
+    public int selectedSpotY = -1;
 
     public VilleMap(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -58,6 +62,7 @@ public class VilleMap extends View {
 
         houseBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.house_icon);
         houseSelectedBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.house_selected_icon);
+        spotSelectedBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.spot_selected_icon);
 
         houseBitmapSize = new RectF(0, 0, 100, 100);
     }
@@ -120,7 +125,7 @@ public class VilleMap extends View {
                         if (isScrolling) {
                             return;
                         }
-                        boolean doInvalidate = false;
+                        boolean houseSelected = false;
                         txtHouseName.setText("");
 
                         if (houses != null) {
@@ -128,21 +133,35 @@ public class VilleMap extends View {
                                 AVHouse house = houses.get(i);
                                 if (house.selected) {
                                     house.selected = false;
-                                    doInvalidate = true;
                                 }
 
                                 if ((house.address.x == x) && (house.address.y == y)) {
                                     house.selected = true;
                                     txtHouseName.setText(house.name);
 
-                                    doInvalidate = true;
+                                    houseSelected = true;
                                 }
                             }
+                        }
 
-                            if (doInvalidate) {
-                                invalidate();
+                        if (houseSelected) {
+                            if (selectedSpotX != -1) {
+                                selectedSpotX = -1;
+                                selectedSpotY = -1;
                             }
                         }
+                        else {
+                            if ((selectedSpotX == x) && (selectedSpotY == y)) {
+                                selectedSpotX = -1;
+                                selectedSpotY = -1;
+                            }
+                            else {
+                                selectedSpotX = x;
+                                selectedSpotY = y;
+                            }
+                        }
+
+                        invalidate();
                     }
                 }.start();
 
@@ -180,6 +199,13 @@ public class VilleMap extends View {
 
                 canvas.restore();
             }
+        }
+
+        if (selectedSpotX != -1) {
+            canvas.save();
+            canvas.translate(selectedSpotX * 100,selectedSpotY * 100);
+            canvas.drawBitmap(spotSelectedBitmap, null, houseBitmapSize, null);
+            canvas.restore();
         }
     }
 

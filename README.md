@@ -10,13 +10,6 @@ Pending work notes:
 ===================
 
 Next up:
- - Add a house.
-   - Select an empty spot in the map and record its address.  Highlight empty spot.
-   - Selecting an already highlighted empty spot clear highlighting (addresses to -1).
-   - Selecting a house should clear any empty spots highlighting (addresses to -1).
-   - Don't proceed until all fields are validated.
-     - For now:  Just the name.
- 
  - Edit a house.
    - If the spot is not empty, don't add.  Edit instead (retrieve house's name and add it to the dialog.)
      - Add button should change caption to "Edit."
@@ -41,6 +34,7 @@ Pending issues:
   - Method/variable/IDs naming needs more consistency.  Use camelCase or underscores consistently, for example.
   - DRY - don't repeat yourself.  For example, the house highlighting code is quite similar to the "on map touch" code. 
   - We're better off using a hash array or map instead of an array in order to store the houses.  That way, any given house could be easily found by its id.
+  - Hardcoded values/magic numbers.  They should be stored in constants or value resource files.
 
 - In fact, if the app crashes with the keyboard showing, the keyboard will remain.  Any way to tie the keyboard to the app, so it gets dismissed if the app crashes?  What's the behavior in other apps?
 
