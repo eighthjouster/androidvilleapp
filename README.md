@@ -11,6 +11,8 @@ Pending issues:
 
 - Bring up the soft keyboard.  Hit enter with a _hardware_ keyboard.  Try to dismiss the dialog.  The app crashes.
 
+- If you edit a house, it will be updated with the "selected" value set to true.  So if you edit several houses, they will all appear as selected, when they aren't.  Fix this.
+
 - Refactoring:
   - Access class instance variables through getters/setters.
   - Some verbosity when dealing with retrofit responses could be hidden (maybe through the use of lambdas?)
