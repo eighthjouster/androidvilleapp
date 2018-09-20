@@ -6,17 +6,6 @@ It works in conjunction with Androidville Server.
 Good luck to us all.
 
 
-Pending work notes:
-===================
-
-Next up:
- - Handle the back button.
-   - Dismiss dialog if the back button is pressed.
-
- - Once the project is done and showcased:
-   - Shutdown the linode server:
-     - /home/p*****/conf/web
-
 Pending issues:
 ===============
 

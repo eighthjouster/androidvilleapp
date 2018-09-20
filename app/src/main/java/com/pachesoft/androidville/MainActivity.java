@@ -229,4 +229,15 @@ public class MainActivity extends AppCompatActivity {
         }
         deleteButton.setEnabled(houseEditMode);
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        if (cancelDialogButton.getVisibility() == View.VISIBLE) {
+            onDismissHouseDialogBtnClick(null);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
 }
