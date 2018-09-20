@@ -125,14 +125,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void deleteHouseBtnClick(View v) {
         if (houseEditMode && villeMap.selectedHouse != null) {
+            final int selectedSpotX = villeMap.selectedHouse.address.x;
+            final int selectedSpotY = villeMap.selectedHouse.address.y;
+            villeMap.selectedSpotY = -1;
             mainApp.serverComm.deleteHouse(villeMap.selectedHouse, new Callback<AVHouse>() {
                 @Override
                 public void onResponse(Call<AVHouse> call, Response<AVHouse> response) {
                     houseDialogTextField.setText("");
-                    mainApp.getAllHouses();
-                    villeMap.selectedSpotX = -1;
-                    villeMap.selectedSpotY = -1;
+                    villeMap.selectedSpotX = selectedSpotX;
+                    villeMap.selectedSpotY = selectedSpotY;
                     setHouseEditMode(false);
+                    mainApp.getAllHouses();
                 }
 
                 @Override

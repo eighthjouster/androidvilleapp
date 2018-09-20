@@ -10,9 +10,7 @@ Pending work notes:
 ===================
 
 Next up:
- - Delete a house.
-
-- After editing the house, update the house caption.
+ - After editing the house, update the house caption.
 
  - Handle the back button.
    - Dismiss dialog if the back button is pressed.
