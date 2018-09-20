@@ -52,6 +52,18 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_house_name" />
 
     <Button
+        android:id="@+id/btn_delete_house"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:gravity="center_vertical"
+        android:onClick="deleteHouseBtnClick"
+        android:text="@string/av_btn_house_delete"
+        android:textColor="?attr/colorError"
+        app:layout_constraintStart_toEndOf="@+id/btn_add_house"
+        app:layout_constraintTop_toBottomOf="@+id/txt_house_name" />
+
+    <Button
         android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

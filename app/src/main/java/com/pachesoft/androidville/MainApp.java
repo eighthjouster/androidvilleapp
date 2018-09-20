@@ -39,7 +39,6 @@ public class MainApp extends Application {
 
                 for (int i = 0; i < houses.size(); i++) {
                     AVHouse house = houses.get(i);
-                    house.selected = false;
                     if (mainActivity.nextHouseId <= house.id) {
                         mainActivity.nextHouseId = house.id + 1;
                     }

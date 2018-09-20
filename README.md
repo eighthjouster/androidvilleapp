@@ -10,13 +10,15 @@ Pending work notes:
 ===================
 
 Next up:
- - Edit a house.
-   - If the spot is not empty, don't add.  Edit instead (retrieve house's name and add it to the dialog.)
-     - Add button should change caption to "Edit."
-       - And back to "Add" when empty spot is selected or no highlighting is ocurring.
- 
  - Delete a house.
- 
+
+- After editing the house, update the house caption.
+
+ - Handle the back button.
+   - Dismiss dialog if the back button is pressed.
+
+ - Get rid of the village name from the map.
+
  - Once the project is done and showcased:
    - Shutdown the linode server:
      - /home/p*****/conf/web
@@ -43,6 +45,12 @@ Pending issues:
 - Adding a house overwrites the old one.  There should be a confirmation dialog, or a refusal response.
 
 - The "vacant" attribute needs to be handled.
+
+- The "selected" attribute should not be stored in the server.
+
+- Phone orientation change or activity reload handling.
+
+- Security handling.
 
 - A "selected" attribute is sometimes added to the database.  A real DB would have refused the add.  Prevent "selected" from being included in any api communication.
 

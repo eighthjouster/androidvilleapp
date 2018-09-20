@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private VilleMap villeMap;
     private Button addEditButton;
+    private Button deleteButton;
     private Button addEditDialogButton;
     private Button cancelDialogButton;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         dialogLayout = findViewById(R.id.ll_house_dialog);
         houseDialogTextField = findViewById(R.id.txt_input_house_name);
         addEditButton = findViewById(R.id.btn_add_house);
+        deleteButton = findViewById(R.id.btn_delete_house);
         addEditDialogButton = findViewById(R.id.action_button);
         cancelDialogButton = findViewById(R.id.cancel_button);
         selectedHouseName = findViewById(R.id.txt_house_name);
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animator) {
                 addEditButton.setVisibility(View.INVISIBLE);
+                deleteButton.setVisibility(View.INVISIBLE);
                 cancelDialogButton.setVisibility(View.VISIBLE);
                 houseDialogTextField.requestFocus();
                 showSoftKeyboard();
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animator) {
                 addEditButton.setVisibility(View.VISIBLE);
+                deleteButton.setVisibility(View.VISIBLE);
             }
             @Override
             public void onAnimationCancel(Animator animator) {
@@ -103,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
         slideDownAnimation.setTarget(dialogLayout);
 
         houseDialogTextField.setFocusableInTouchMode(true);
+
+        setHouseEditMode(false);
     }
 
     public VilleMap getVilleMap() {
@@ -115,6 +121,26 @@ public class MainActivity extends AppCompatActivity {
             houseDialogTextField.selectAll();
         }
         slideUpAnimation.start();
+    }
+
+    public void deleteHouseBtnClick(View v) {
+        if (houseEditMode && villeMap.selectedHouse != null) {
+            mainApp.serverComm.deleteHouse(villeMap.selectedHouse, new Callback<AVHouse>() {
+                @Override
+                public void onResponse(Call<AVHouse> call, Response<AVHouse> response) {
+                    houseDialogTextField.setText("");
+                    mainApp.getAllHouses();
+                    villeMap.selectedSpotX = -1;
+                    villeMap.selectedSpotY = -1;
+                    setHouseEditMode(false);
+                }
+
+                @Override
+                public void onFailure(Call<AVHouse> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
     public void onDismissHouseDialogBtnClick(View v) {
@@ -187,10 +213,13 @@ public class MainActivity extends AppCompatActivity {
         if (houseEditMode) {
             addEditButton.setText("Edit house");
             addEditDialogButton.setText("Edit house");
+            deleteButton.setTextColor(getResources().getColor(R.color.red));
         }
         else {
             addEditButton.setText("Add house");
             addEditDialogButton.setText("Add house");
+            deleteButton.setTextColor(getResources().getColor(R.color.softRed));
         }
+        deleteButton.setEnabled(houseEditMode);
     }
 }
